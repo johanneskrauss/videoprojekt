@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 
+
 def add_watermark(base_image_path, watermark_image_path, output_image_path, position, size, transparency):
     """
     Fügt ein Wasserzeichen zu einem Bild hinzu.

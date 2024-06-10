@@ -58,8 +58,8 @@ class Watermark:
                 mask = a / 255.0
             else:
                 watermark_rgb = self.watermark
-                mask = np.ones(watermark_rgb.shape[:2], dtype=float)
-
+                b, g, r = cv2.split(watermark_rgb)
+                mask = (b+g+r)/255.0
             mask = mask * self.transparency
             x, y = self.position
             h, w = watermark_rgb.shape[:2]

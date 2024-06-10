@@ -48,8 +48,9 @@ def add_watermark(base_image_path, watermark_image_path, output_image_path, posi
         watermark_rgb = cv2.merge((b, g, r))
         mask = a / 255.0
     else:
-        watermark_rgb = watermark
-        mask = np.ones(watermark_rgb.shape[:2], dtype=float)
+        watermark_rgb = self.watermark
+        b, g, r = cv2.split(watermark_rgb)
+        mask = (b + g + r) / 255.0
 
     # Transparenz anwenden
     mask = mask * transparency

@@ -35,10 +35,9 @@ class Image:
     def logoPositions(self, value):
         self.__logoPositions = value
 
-    def getMouseCoordinates(event, x, y, flags, params = None) -> None:
+    def getMousePosition(event, x, y, flags, params = None) -> None:
         if event == cv2.EVENT_LBUTTONDOWN:
             print(x, y)
-        cv2.waitKey(0)
 
     def addWatermark(self, logo: Logo, mask) -> None:
         x,y = self.logoPositions

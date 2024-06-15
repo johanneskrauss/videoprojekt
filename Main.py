@@ -8,6 +8,7 @@ from Image import Image
 from Logo import Logo
 
 if __name__ == "__main__":
+
     #Hintergrundbild
     print("Hauptbild")
     baseImgPath = Utils.selectFile()
@@ -31,7 +32,7 @@ if __name__ == "__main__":
     # Redirect standard output to the new stream
     sys.stdout = output
 
-    cv2.setMouseCallback("image", Image.getMouseCoordinates)
+    cv2.setMouseCallback("image", Image.getMousePosition)
 
     # Reset standard output to the console
     cv2.waitKey(0)

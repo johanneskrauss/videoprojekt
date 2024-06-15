@@ -1,16 +1,28 @@
 import cv2
-import numpy as np
-import Utils
-from Logo import Logo
 
 
 class Image:
+    def __init__(self, path):
+        self.__path = path
+        self.__openCVData = cv2.imread(self.path)
+        self.__size = self.openCVData.shape[0], self.openCVData.shape[1]
 
-    logoPos = (0,0)
-    def __init__ (self,baseImage):
-        self.__size = baseImage.shape[0],baseImage.shape[1]
-        self.__baseImage = baseImage
-        self.__logoPositions = (0,0)
+    @property
+    def path(self):
+        return self.__path
+
+    @path.setter
+    def path(self, value):
+        self.__path = value
+
+    @property
+    def openCVData(self):
+        return self.__openCVData
+
+    @openCVData.setter
+    def openCVData(self, value):
+        self.__openCVData = value
+
     @property
     def size(self):
         return self.__size
@@ -18,38 +30,3 @@ class Image:
     @size.setter
     def size(self, value):
         self.__size = value
-
-    @property
-    def baseImage(self):
-        return self.__baseImage
-
-    @baseImage.setter
-    def baseImage(self, value):
-        self.__baseImage = value
-
-    @property
-    def logoPositions(self):
-        return self.__logoPositions
-
-    @logoPositions.setter
-    def logoPositions(self, value):
-        self.__logoPositions = value
-
-    def getMousePosition(event, x, y, flags, params = None) -> None:
-        if event == cv2.EVENT_LBUTTONDOWN:
-            print(x, y)
-
-    def addWatermark(self, logo: Logo, mask) -> None:
-        x,y = self.logoPositions
-        w,h = logo.size
-        roi = self.baseImage[y:y + h, x:x + w]
-
-        # Wasserzeichen hinzufügen
-        for c in range(0, 3):
-            roi[:, :, c] = roi[:, :, c] * (1 - mask) + logo.logoImage[:, :, c] * mask
-
-        self.baseImage[y:y + h, x:x + w] = roi
-
-
-
-

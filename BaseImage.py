@@ -18,13 +18,13 @@ class BaseImage(Image):
     def logoPositions(self, value):
         self.__logoPositions = value
 
-    def addWatermark(self, logo: Logo, mask):
+    def addWatermark(self, logo: Logo):
         x, y = self.logoPositions
         w, h = logo.size
         roi = self.openCVData[y:y + h, x:x + w]
 
         # Wasserzeichen hinzufügen
         for c in range(0, 3):
-            roi[:, :, c] = roi[:, :, c] * (1 - mask) + logo.openCVData[:, :, c] * mask
+            roi[:, :, c] = roi[:, :, c] * (1 - logo.transparency) + logo.openCVData[:, :, c] * logo.transparency
 
         self.openCVData[y:y + h, x:x + w] = roi

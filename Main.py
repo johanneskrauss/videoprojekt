@@ -15,7 +15,7 @@ if __name__ == "__main__":
     # Hintergrundbild
     print("Hauptbild")
     mainPath = Utils.selectFile()
-    MainImage = BaseImage(cv2.imread(mainPath))
+    MainImage = BaseImage(mainPath)
 
     # Wasserzeichen
     print("Wasserzeichen: ")
@@ -45,12 +45,13 @@ if __name__ == "__main__":
 
     logoPos = logoPos.strip("\n").split(" ")
     print(logoPos)
-    MainImage.logoPositions = int(logoPos[0]), int(logoPos[1])
+   #MainImage.logoPositions = int(logoPos[0]), int(logoPos[1])
+    MainImage.logoPositions = (0,0)
 
     #WatermarkWithoutAlpha, mask = Watermark.splitRGBAChannels()
     Watermark.transparency = Watermark.getAlpha() * Watermark.transparency
 
-    MainImage.addWatermark(Watermark, Watermark.transparency)
+    MainImage.addWatermark(Watermark)
 
     cv2.imshow("image", MainImage.openCVData)
     cv2.waitKey(0)

@@ -29,6 +29,7 @@ class Logo(Image):
             b, g, r, a = cv2.split(self.openCVData)
             return a / 255.0
         else:
+            cv2.cvtColor(self.openCVData, cv2.COLOR_BGR2BGRA)
             b, g, r = cv2.split(self.openCVData)
             return (b + g + r) / 255.0
 

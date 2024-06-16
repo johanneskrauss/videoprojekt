@@ -21,9 +21,12 @@ class Logo(Image):
     def scaleSize(self, factor: float, imageSize: tuple) -> None:
         if factor <= 0 or factor > 1:
             raise ValueError("Factor must be  between 0 and 1")
+
         ratio = float(self.openCVData.shape[1]) / float(self.openCVData.shape[0])  # Bildverhältnis beibehalten
         if ratio > 1:
-            self.size = int(imageSize[0] * factor), int(imageSize[1] * factor / ratio)
+            self.size = int(imageSize[1] * factor), int(imageSize[0] * factor / ratio)
+        elif ratio == 1:
+            self.size = int(imageSize[0] * factor), int(imageSize[0] * factor)
         else:
             self.size = int(imageSize[0] * factor * ratio), int(imageSize[1] * factor )
         self.openCVData = cv2.resize(self.openCVData, self.size, interpolation=cv2.INTER_AREA)

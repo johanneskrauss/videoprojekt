@@ -4,7 +4,6 @@ from Image import Image
 
 
 class BaseImage(Image):
-    logoPos = (0, 0)
 
     def __init__(self, path):
         super().__init__(path)
@@ -21,6 +20,16 @@ class BaseImage(Image):
     def addWatermark(self, logo: Logo):
         x, y = self.logoPositions
         w, h = logo.size
+
+        borders = self.openCVData[y:y + h, x:x + w]
+
+        # Wasserzeichen anpassen, falls es über den Bildrand hinausragt
+        if borders.shape[0] != h:
+            y -= h - borders.shape[0]
+
+        if borders.shape[1] != w:
+            x -= w - borders.shape[1]
+
         roi = self.openCVData[y:y + h, x:x + w]
 
         # Wasserzeichen hinzufügen

@@ -10,46 +10,98 @@ from Logo import Logo
 # Dateipfade
 mainPath = ""
 watermarkPath = ""
+transparency = 0
+factor = 0
+logoPos = ""
+Watermark = None
+factorFlag = 0
+
 
 if __name__ == "__main__":
-    # Hintergrundbild
-    print("Hauptbild")
-    mainPath = Utils.selectFile()
-    MainImage = BaseImage(mainPath)
 
-    # Wasserzeichen
-    print("Wasserzeichen: ")
-    watermarkPath = Utils.selectFile()
+    while mainPath == "":
 
-    transparency = float(input("Transparenz: "))
-    Watermark = Logo(transparency, watermarkPath)
+        # Hintergrundbild
+        print("Hauptbild: ")
 
-    factor = float(input("Faktor: "))
-    Watermark.scaleSize(factor, MainImage.size)
+        try:
+            mainPath = Utils.selectFile()
+            MainImage = BaseImage(mainPath)
+        except FileNotFoundError:
+            print("Datei konnte nicht gefunden werden!")
+        except ValueError:
+            print("Das Dateiformat ist falsch!")
 
-    print("Position des Wasserzeichens: ")
-    cv2.imshow("image", MainImage.openCVData)
+    while watermarkPath == "":
 
-    # Create a new stream to capture the output
-    output = io.StringIO()
+        try:
+            # Wasserzeichen
+            print("Wasserzeichen: ")
+            watermarkPath = Utils.selectFile()
 
-    # Redirect standard output to the new stream
-    sys.stdout = output
+        except FileNotFoundError:
+            print("Datei nicht gefunden!")
+        except ValueError:
+            print("Falsches Dateiformat!")
 
-    cv2.setMouseCallback("image", Utils.getMousePosition)
+    while Watermark == None:
+        try:
+            transparency = float(input("Transparenz: "))
 
-    # Reset standard output to the console
-    cv2.waitKey(0)
-    sys.stdout = sys.__stdout__
-    logoPos = output.getvalue()
+            if transparency < 0 or transparency > 1:
+                raise ValueError("Transparency must be between 0 and 1")
 
-    logoPos = logoPos.strip("\n").split(" ")
-    print(logoPos)
-    MainImage.logoPositions = int(logoPos[0]), int(logoPos[1])
+            Watermark = Logo(transparency, watermarkPath)
 
-    Watermark.transparency = Watermark.getAlpha() * Watermark.transparency
+        except ValueError:
+            print("Bitte gibt eine Gleitkomma-Zahl zwischen 0 und 1 an!")
+        except:
+            print("Da ist was schiefgelaufen!")
 
-    MainImage.addWatermark(Watermark)
+    while factorFlag == 0:
+        try:
+            factor = float(input("Faktor: "))
 
-    cv2.imshow("image", MainImage.openCVData)
-    cv2.waitKey(0)
+            if factor < 0 or factor > 1:
+                raise ValueError("Factor must be between 0 and 1")
+
+            factorFlag = 1
+            Watermark.scaleSize(factor, MainImage.size)
+
+        except ValueError:
+            print("Bitte gibt eine Gleitkomma-Zahl zwischen 0 und 1 an!")
+        except:
+            print("Da ist etwas schiefgelaufen!")
+
+    while logoPos == "":
+
+        try:
+            print("Position des Wasserzeichens: ")
+            cv2.imshow("image", MainImage.openCVData)
+
+            # Create a new stream to capture the output
+            output = io.StringIO()
+
+            # Redirect standard output to the new stream
+            sys.stdout = output
+
+            cv2.setMouseCallback("image", Utils.getMousePosition)
+
+            # Reset standard output to the console
+            cv2.waitKey(0)
+            sys.stdout = sys.__stdout__
+            logoPos = output.getvalue()
+
+            logoPos = logoPos.strip("\n").split(" ")
+            print(logoPos)
+            MainImage.logoPositions = int(logoPos[0]), int(logoPos[1])
+
+            Watermark.transparency = Watermark.getAlpha() * Watermark.transparency
+
+            MainImage.addWatermark(Watermark)
+
+            cv2.imshow("image", MainImage.openCVData)
+            cv2.waitKey(0)
+
+        except:
+            print("Kaput!")

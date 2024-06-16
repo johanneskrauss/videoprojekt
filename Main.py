@@ -22,7 +22,7 @@ if __name__ == "__main__":
     while mainPath == "":
 
         # Hintergrundbild
-        print("Hauptbild: ")
+        print("Bitte wähle einen Hintergrund aus: ")
 
         try:
             mainPath = Utils.selectFile()
@@ -31,22 +31,26 @@ if __name__ == "__main__":
             print("Datei konnte nicht gefunden werden!")
         except ValueError:
             print("Das Dateiformat ist falsch!")
+        except AttributeError:
+            print("Bitte eine Bilddatei auswählen! (.jpg, .png, .bmp, ...)")
 
     while watermarkPath == "":
 
         try:
             # Wasserzeichen
-            print("Wasserzeichen: ")
+            print("Bitte wähle ein Wasserzeichen aus: ")
             watermarkPath = Utils.selectFile()
 
         except FileNotFoundError:
             print("Datei nicht gefunden!")
         except ValueError:
             print("Falsches Dateiformat!")
+        except AttributeError:
+            print("Bitte eine Bilddatei auswählen! (.jpg, .png, .bmp, ...)")
 
     while Watermark == None:
         try:
-            transparency = float(input("Transparenz: "))
+            transparency = float(input("Bitte den Grad der Transparenz angeben! (Zwischen 0 und 1, wobei 1 = 100% Deckkraft): "))
 
             if transparency < 0 or transparency > 1:
                 raise ValueError("Transparency must be between 0 and 1")
@@ -56,11 +60,11 @@ if __name__ == "__main__":
         except ValueError:
             print("Bitte gibt eine Gleitkomma-Zahl zwischen 0 und 1 an!")
         except:
-            print("Da ist was schiefgelaufen!")
+            print("Da ist etwas schiefgelaufen!")
 
     while factorFlag == 0:
         try:
-            factor = float(input("Faktor: "))
+            factor = float(input("Bitte einen Skalierungs-Faktor angeben! (Zwischen 0 und 1, wobei 1 = Maximal mögliche Größe): "))
 
             if factor < 0 or factor > 1:
                 raise ValueError("Factor must be between 0 and 1")
@@ -76,7 +80,7 @@ if __name__ == "__main__":
     while logoPos == "":
 
         try:
-            print("Position des Wasserzeichens: ")
+            print("Position des Wasserzeichens, durch 'Mausklick' bestätigen: ")
             cv2.imshow("image", MainImage.openCVData)
 
             # Create a new stream to capture the output
@@ -101,7 +105,27 @@ if __name__ == "__main__":
             MainImage.addWatermark(Watermark)
 
             cv2.imshow("image", MainImage.openCVData)
+
             cv2.waitKey(0)
+            OutputImageSatisfactory = ""
+
+            while OutputImageSatisfactory != "J" and OutputImageSatisfactory != "N":
+
+                OutputImageSatisfactory = input("Gefällt Ihnen die Position des Wasserzeichens? (J = Ja, N = Nein): ")
+
+                try:
+                    if OutputImageSatisfactory.upper() == "J":
+                        OutputImagePath = input("Bitte geben Sie einen Namen für die zu speichernde Datei an: ") + ".png"
+
+                        cv2.imwrite(OutputImagePath, MainImage.openCVData)
+
+                    elif OutputImageSatisfactory.upper() == "N":
+                        print("#DoItAgain")
+
+                    else:
+                        print("Falscher Buchstabe!")
+                except:
+                    print("Mehr Kaput!")
 
         except:
             print("Kaput!")

@@ -48,7 +48,7 @@ if __name__ == "__main__":
         except AttributeError:
             print("Bitte eine Bilddatei auswählen! (.jpg, .png, .bmp, ...)")
 
-    while Watermark == None:
+    while Watermark is None:
         try:
             transparency = float(input("Bitte den Grad der Transparenz angeben! (Zwischen 0 und 1, wobei 1 = 100% Deckkraft): "))
 
@@ -59,8 +59,8 @@ if __name__ == "__main__":
 
         except ValueError:
             print("Bitte gibt eine Gleitkomma-Zahl zwischen 0 und 1 an!")
-        except:
-            print("Da ist etwas schiefgelaufen!")
+        except Exception as e:
+            print("Da ist etwas schiefgelaufen!", e)
 
     while factorFlag == 0:
         try:
@@ -70,12 +70,12 @@ if __name__ == "__main__":
                 raise ValueError("Factor must be between 0 and 1")
 
             factorFlag = 1
-            Watermark.scaleSize(factor, MainImage.size)
+            Watermark.scale(factor, MainImage.size)
 
         except ValueError:
             print("Bitte gibt eine Gleitkomma-Zahl zwischen 0 und 1 an!")
-        except:
-            print("Da ist etwas schiefgelaufen!")
+        except Exception as e:
+            print("Da ist etwas schiefgelaufen!", e)
 
     while logoPos == "":
 
@@ -98,35 +98,35 @@ if __name__ == "__main__":
 
             logoPos = logoPos.strip("\n").split(" ")
             print(logoPos)
-            MainImage.logoPositions = int(logoPos[0]), int(logoPos[1])
+            MainImage.logoPosition = int(logoPos[0]), int(logoPos[1])
 
-            Watermark.transparency = Watermark.getAlpha() * Watermark.transparency
+            Watermark.transparency = Watermark.getAlphaChannel() * Watermark.transparency
 
             MainImage.addWatermark(Watermark)
 
             cv2.imshow("image", MainImage.openCVData)
 
             cv2.waitKey(0)
-            OutputImageSatisfactory = ""
+            outputImageSatisfactory = ""
 
-            while OutputImageSatisfactory != "J" and OutputImageSatisfactory != "N":
+            while outputImageSatisfactory != "J" and outputImageSatisfactory != "N":
 
-                OutputImageSatisfactory = input("Gefällt Ihnen die Position des Wasserzeichens? (J = Ja, N = Nein): ")
+                outputImageSatisfactory = input("Gefällt Ihnen die Position des Wasserzeichens? (J = Ja, N = Nein): ")
 
                 try:
-                    if OutputImageSatisfactory.upper() == "J":
-                        OutputImagePath = input("Bitte geben Sie einen Namen für die zu speichernde Datei an: ") + ".png"
+                    if outputImageSatisfactory.upper() == "J":
+                        outputImagePath = input("Bitte geben Sie einen Namen für die zu speichernde Datei an: ") + ".png"
 
-                        cv2.imwrite(OutputImagePath, MainImage.openCVData)
+                        cv2.imwrite(outputImagePath, MainImage.openCVData)
 
-                    elif OutputImageSatisfactory.upper() == "N":
+                    elif outputImageSatisfactory.upper() == "N":
                         print("#DoItAgain")
 
                     else:
                         print("Falscher Buchstabe!")
-                except:
-                    print("Mehr Kaput!")
+                except Exception as e:
+                    print("Mehr Kaput!", e)
 
-        except:
-            print("Kaput!")
+        except Exception as e:
+            print("Kaput!", e)
             #lalaaland

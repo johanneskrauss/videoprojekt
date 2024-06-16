@@ -52,11 +52,12 @@ if __name__ == "__main__":
                 raise ValueError("Transparency must be between 0 and 1")
 
             Watermark = Logo(transparency, watermarkPath)
+            Watermark.transparency = Watermark.getAlphaChannel() * Watermark.transparency
 
         except ValueError:
             print("Bitte gibt eine Gleitkomma-Zahl zwischen 0 und 1 an!")
-        except:
-            print("Da ist was schiefgelaufen!")
+        except Exception as e:
+            print("Da ist was schiefgelaufen! ", e)
 
     while factorFlag == 0:
         try:
@@ -66,12 +67,12 @@ if __name__ == "__main__":
                 raise ValueError("Factor must be between 0 and 1")
 
             factorFlag = 1
-            Watermark.scaleSize(factor, MainImage.size)
+            Watermark.scale(factor, MainImage.size)
 
         except ValueError:
             print("Bitte gibt eine Gleitkomma-Zahl zwischen 0 und 1 an!")
-        except:
-            print("Da ist etwas schiefgelaufen!")
+        except Exception as e:
+            print("Da ist was schiefgelaufen! ", e)
 
     while logoPos == "":
 
@@ -96,12 +97,11 @@ if __name__ == "__main__":
             print(logoPos)
             MainImage.logoPositions = int(logoPos[0]), int(logoPos[1])
 
-            Watermark.transparency = Watermark.getAlpha() * Watermark.transparency
 
             MainImage.addWatermark(Watermark)
 
             cv2.imshow("image", MainImage.openCVData)
             cv2.waitKey(0)
 
-        except:
-            print("Kaput!")
+        except Exception as e:
+            print("Kaputt!: ", e)

@@ -95,7 +95,7 @@ if __name__ == "__main__":
 
             logoPos = logoPos.strip("\n").split(" ")
             print(logoPos)
-            MainImage.logoPositions = int(logoPos[0]), int(logoPos[1])
+            MainImage.logoPosition = int(logoPos[0]), int(logoPos[1])
 
 
             MainImage.addWatermark(Watermark)

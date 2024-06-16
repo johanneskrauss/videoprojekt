@@ -7,18 +7,18 @@ class BaseImage(Image):
 
     def __init__(self, path):
         super().__init__(path)
-        self.__logoPositions = (0, 0)
+        self.__logoPosition = (0, 0)
 
     @property
-    def logoPositions(self):
-        return self.__logoPositions
+    def logoPosition(self):
+        return self.__logoPosition
 
-    @logoPositions.setter
-    def logoPositions(self, value):
-        self.__logoPositions = value
+    @logoPosition.setter
+    def logoPosition(self, value):
+        self.__logoPosition = value
 
     def addWatermark(self, logo: Logo):
-        x, y = self.logoPositions
+        x, y = self.logoPosition
         w, h = logo.size
 
         borders = self.openCVData[y:y + h, x:x + w]

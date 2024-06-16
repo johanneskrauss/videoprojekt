@@ -24,13 +24,18 @@ class Logo(Image):
         # Bildverhältnis beibehalten
         ratio = float(self.openCVData.shape[1]) / float(self.openCVData.shape[0])
         if ratio > 1:  # Breiter als hoch
-            new_width = int(imageSize[1] * factor)
-            new_height = int(new_width / ratio)
+            newWidth = int(imageSize[1] * factor)
+            newHeight = int(newWidth / ratio)
 
-        else:  # Höher als breit/quadratisch
-            new_height = int(imageSize[0] * factor)
-            new_width = int(new_height * ratio)
-        self.size = new_width, new_height
+        elif ratio == 1:  # Quadratisch
+            newWidth = min(imageSize)
+            newHeight = newWidth
+
+        else:  # Höher als breit
+            newHeight = int(imageSize[0] * factor)
+            newWidth = int(newHeight * ratio)
+
+        self.size = newWidth, newHeight
         self.openCVData = cv2.resize(self.openCVData, self.size, interpolation=cv2.INTER_AREA)
 
     # Alpha Kanal von Bild ausgeben oder erstellen

@@ -45,8 +45,7 @@ if __name__ == "__main__":
 
     logoPos = logoPos.strip("\n").split(" ")
     print(logoPos)
-   #MainImage.logoPositions = int(logoPos[0]), int(logoPos[1])
-    MainImage.logoPositions = (0,0)
+    MainImage.logoPositions = int(logoPos[0]), int(logoPos[1])
 
     #WatermarkWithoutAlpha, mask = Watermark.splitRGBAChannels()
     Watermark.transparency = Watermark.getAlpha() * Watermark.transparency

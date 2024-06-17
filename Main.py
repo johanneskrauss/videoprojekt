@@ -46,20 +46,23 @@ if __name__ == "__main__":
 
     while watermarkPath == "":
 
-        try:
-            # Wasserzeichen
-            print("Bitte wähle ein Wasserzeichen aus: ")
-            watermarkPath = Utils.selectFile()
+        text_oder_bild = input("Möchten Sie Text oder ein Bild einfügen? (t=Text, b=Bild)")
+        if text_oder_bild.lower() == "t":
+            Utils.text_to_logo()
+            watermarkPath = "text_logo.png"
+            break
+        elif text_oder_bild.lower() == "b":
+            try:
+                # Wasserzeichen
+                print("Bitte wähle ein Wasserzeichen aus: ")
+                watermarkPath = Utils.selectFile()
 
-        except FileNotFoundError:
-            print("Datei nicht gefunden!")
-            watermarkPath = ""
-        except ValueError:
-            print("Falsches Dateiformat!")
-            watermarkPath = ""
-        except AttributeError:
-            print("Bitte eine Bilddatei auswählen! (.jpg, .png, .bmp, ...)")
-            watermarkPath = ""
+            except FileNotFoundError:
+                print("Datei nicht gefunden!")
+            except ValueError:
+                print("Falsches Dateiformat!")
+            except AttributeError:
+                print("Bitte eine Bilddatei auswählen! (.jpg, .png, .bmp, ...)")
 
     while Watermark is None:
         try:
@@ -67,7 +70,9 @@ if __name__ == "__main__":
 
             if transparency < 0 or transparency > 1:
                 raise ValueError("Transparency must be between 0 and 1")
+
             Watermark = Logo(transparency, watermarkPath)
+
 
         except ValueError:
             print("Bitte gibt eine Gleitkomma-Zahl zwischen 0 und 1 an!")
@@ -82,6 +87,7 @@ if __name__ == "__main__":
                 raise ValueError("Factor must be between 0 and 1")
             Watermark.scale(factor, MainImage.size)
             factorFlag = 1
+            Watermark.scale(factor, MainImage.size)
 
         except ValueError:
             print("Bitte gibt eine Gleitkomma-Zahl zwischen 0 und 1 an!")
@@ -96,6 +102,8 @@ if __name__ == "__main__":
 
             cv2.setMouseCallback(MainImage.name, MainImage.setLogoPosition)
             cv2.waitKey(0)
+            print("Drücke eine beliebige Taste, um fortzufahren!")
+            MainImage.close()
 
             MainImage.addWatermark(Watermark)
             MainImage.show()

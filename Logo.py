@@ -17,6 +17,14 @@ class Logo(Image):
     def transparency(self, value=1.0):
         self.__transparency = self.getAlphaChannel() * value
 
+    # Alpha Kanal von Bild ausgeben oder erstellen
+    def getAlphaChannel(self) -> np.ndarray:
+        if self.openCVData.shape[2] == 4:  # Alpha Channel vorhanden
+            alpha = self.openCVData[:, :, 3]
+            return alpha / 255.0
+        else:
+            return np.ones(self.openCVData.shape[:2], dtype="float32")  # Kein Alpha Channel vorhanden -> Array aus 1en
+
     # Logogröße in Relation zum Bild
     def scale(self, factor: float, imageSize: tuple) -> None:
         if factor <= 0 or factor > 1:
@@ -39,13 +47,6 @@ class Logo(Image):
         self.openCVData = cv2.resize(self.openCVData, self.size, interpolation=cv2.INTER_AREA)
         self.transparency = cv2.resize(self.transparency, self.size, interpolation=cv2.INTER_AREA) # resize transparency array to fit new image size
 
-    # Alpha Kanal von Bild ausgeben oder erstellen
-    def getAlphaChannel(self) -> np.ndarray:
-        if self.openCVData.shape[2] == 4:  # Alpha Channel vorhanden
-            alpha = self.openCVData[:, :, 3]
-            return alpha / 255.0
-        else:
-            return np.ones(self.openCVData.shape[:2], dtype="float32")  # Kein Alpha Channel vorhanden -> Array aus 1en
 
     # RGB Anteil von Bild ausgeben
     def getRGBChannel(self) -> np.ndarray:

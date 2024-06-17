@@ -9,7 +9,7 @@ class BaseImage(Image):
 
     def __init__(self, path):
         super().__init__(path)
-        self.__logoPosition = (0, 0)
+        self.__logoPosition = [0, 0]
 
     @property
     def logoPosition(self):
@@ -53,6 +53,6 @@ class BaseImage(Image):
 
     def setLogoPosition(self, event, x, y, flags, param):
         if event == cv2.EVENT_LBUTTONDOWN:
-            self.logoPosition = (x, y)
+            self.logoPosition = [x, y]
             print("Position des Wasserzeichens: ", self.logoPosition)
             print("Drücke eine beliebige Taste, um fortzufahren!")

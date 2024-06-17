@@ -3,6 +3,7 @@ import sys
 
 import Utils
 import cv2
+from Utils import TextImage
 
 from BaseImage import BaseImage
 from Logo import Logo
@@ -48,7 +49,10 @@ if __name__ == "__main__":
 
         text_oder_bild = input("Möchten Sie Text oder ein Bild einfügen? (t=Text, b=Bild)")
         if text_oder_bild.lower() == "t":
-            Utils.text_to_logo()
+            TextImage = TextImage()
+            TextImage.selectText(input("Bitte geben Sie den Text ein: "))
+            TextImage.selectFontColor(input("Bitte geben Sie die Schriftfarbe an (S=Schwarz, W=Weiß, G=Grau): "))
+            TextImage.createTextImage()
             watermarkPath = "text_logo.png"
             break
         elif text_oder_bild.lower() == "b":
@@ -72,7 +76,7 @@ if __name__ == "__main__":
                 raise ValueError("Transparency must be between 0 and 1")
 
             Watermark = Logo(transparency, watermarkPath)
-           # Watermark.transparency = transparency
+            TextImage.deleteFile()
             MainImage.alignLogo(Watermark)
 
         except ValueError:
@@ -111,21 +115,22 @@ if __name__ == "__main__":
         except Exception as e:
             print("Kaput!", e)
 
-        while outputImageSatisfactory not in {"J", "j"} and outputImageSatisfactory not in {"N", "n"}:
+        while outputImageSatisfactory != "J" and outputImageSatisfactory != "N":
 
-            outputImageSatisfactory = input("Gefällt Ihnen die Position des Wasserzeichens? (J = Ja, N = Nein): ")
+            outputImageSatisfactory = input("Gefällt Ihnen die Position des Wasserzeichens? (J = Ja, N = Nein): ").upper()
 
             try:
-                if outputImageSatisfactory.upper() == "J":
+                if outputImageSatisfactory == "J":
                     outputImagePath = input("Bitte geben Sie einen Namen für die zu speichernde Datei an: ") + ".png"
                     MainImage.save(outputImagePath)
                     print("Bild wurde gespeichert!")
                     isLogoPos = 1
 
-                elif outputImageSatisfactory.upper() == "N":
+                elif outputImageSatisfactory == "N":
                     print("#DoItAgain")
-                    logoPos = ""
+                    isLogoPos = 0
                     MainImage = BaseImage(mainPath)
+                    outputImageSatisfactory = ""
 
                 else:
                     print("Falscher Buchstabe!")

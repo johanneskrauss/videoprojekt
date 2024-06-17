@@ -15,7 +15,7 @@ class Logo(Image):
 
     @transparency.setter
     def transparency(self, value):
-        self.__transparency = value
+        self.__transparency = self.getAlphaChannel() * value
 
     # Logogröße in Relation zum Bild
     def scale(self, factor: float, imageSize: tuple) -> None:

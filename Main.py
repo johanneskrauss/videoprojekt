@@ -57,6 +57,7 @@ if __name__ == "__main__":
 
             Watermark = Logo(transparency, watermarkPath)
 
+
         except ValueError:
             print("Bitte gibt eine Gleitkomma-Zahl zwischen 0 und 1 an!")
         except Exception as e:
@@ -87,8 +88,6 @@ if __name__ == "__main__":
             cv2.waitKey(0)
             print("Drücke eine beliebige Taste, um fortzufahren!")
             MainImage.close()
-
-            Watermark.transparency = Watermark.getAlphaChannel() * Watermark.transparency
 
             MainImage.addWatermark(Watermark)
             MainImage.show()

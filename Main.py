@@ -81,32 +81,19 @@ if __name__ == "__main__":
 
         try:
             print("Position des Wasserzeichens, durch 'Mausklick' bestätigen: ")
-            cv2.imshow("image", MainImage.openCVData)
+            MainImage.show()
 
-            # Create a new stream to capture the output
-            output = io.StringIO()
-
-            # Redirect standard output to the new stream
-            sys.stdout = output
-
-            cv2.setMouseCallback("image", Utils.getMousePosition)
-
-            # Reset standard output to the console
+            cv2.setMouseCallback(MainImage.name, MainImage.setLogoPosition)
             cv2.waitKey(0)
-            sys.stdout = sys.__stdout__
-            logoPos = output.getvalue()
-
-            logoPos = logoPos.strip("\n").split(" ")
-            print(logoPos)
-            MainImage.logoPosition = int(logoPos[0]), int(logoPos[1])
+            print("Drücke eine beliebige Taste, um fortzufahren!")
+            MainImage.close()
 
             Watermark.transparency = Watermark.getAlphaChannel() * Watermark.transparency
 
             MainImage.addWatermark(Watermark)
-
-            cv2.imshow("image", MainImage.openCVData)
-
+            MainImage.show()
             cv2.waitKey(0)
+            print("Drücke eine beliebige Taste, um fortzufahren!")
             outputImageSatisfactory = ""
 
             while outputImageSatisfactory not in {"J", "j"} and outputImageSatisfactory not in {"N", "n"}:
@@ -116,8 +103,8 @@ if __name__ == "__main__":
                 try:
                     if outputImageSatisfactory.upper() == "J":
                         outputImagePath = input("Bitte geben Sie einen Namen für die zu speichernde Datei an: ") + ".png"
-
-                        cv2.imwrite(outputImagePath, MainImage.openCVData)
+                        MainImage.save(outputImagePath)
+                        print("Bild wurde gespeichert!")
 
                     elif outputImageSatisfactory.upper() == "N":
                         print("#DoItAgain")
@@ -131,4 +118,3 @@ if __name__ == "__main__":
 
         except Exception as e:
             print("Kaput!", e)
-            #lalaaland

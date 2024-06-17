@@ -2,10 +2,11 @@ import cv2
 
 
 class Image:
-    def __init__(self, path):
+    def __init__(self, path, name="image"):
         self.__path = path
         self.__openCVData = cv2.imread(self.path)
         self.__size = self.openCVData.shape[0], self.openCVData.shape[1]
+        self.__name = name
 
     @property
     def path(self):
@@ -30,3 +31,20 @@ class Image:
     @size.setter
     def size(self, value):
         self.__size = value
+
+    @property
+    def name(self):
+        return self.__name
+
+    @name.setter
+    def name(self, value):
+        self.__name = value
+
+    def show(self):
+        cv2.imshow(self.name, self.openCVData)
+
+    def close(self):
+        cv2.destroyAllWindows()
+
+    def save(self, path):
+        cv2.imwrite(path, self.openCVData)

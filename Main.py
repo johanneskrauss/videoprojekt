@@ -10,12 +10,19 @@ from Logo import Logo
 # Dateipfade
 mainPath = ""
 watermarkPath = ""
+
+# Variablen
 transparency = 0
 factor = 0
-logoPos = ""
-Watermark = None
-factorFlag = 0
 
+# Objekte
+Watermark = None
+MainImage = None
+
+# Flags
+isLogoPos = 0
+factorFlag = 0
+outputImageSatisfactory = ""
 
 if __name__ == "__main__":
 
@@ -29,10 +36,13 @@ if __name__ == "__main__":
             MainImage = BaseImage(mainPath)
         except FileNotFoundError:
             print("Datei konnte nicht gefunden werden!")
+            mainPath = ""
         except ValueError:
             print("Das Dateiformat ist falsch!")
+            mainPath = ""
         except AttributeError:
-            print("Bitte eine Bilddatei auswählen! (.jpg, .png, .bmp, ...)")
+            print("Bitte eine Bilddatei auswählen! (.jpg, .png, .bmp, ...) oder Pfad existiert nicht!")
+            mainPath = ""
 
     while watermarkPath == "":
 
@@ -43,10 +53,13 @@ if __name__ == "__main__":
 
         except FileNotFoundError:
             print("Datei nicht gefunden!")
+            watermarkPath = ""
         except ValueError:
             print("Falsches Dateiformat!")
+            watermarkPath = ""
         except AttributeError:
             print("Bitte eine Bilddatei auswählen! (.jpg, .png, .bmp, ...)")
+            watermarkPath = ""
 
     while Watermark is None:
         try:
@@ -54,9 +67,7 @@ if __name__ == "__main__":
 
             if transparency < 0 or transparency > 1:
                 raise ValueError("Transparency must be between 0 and 1")
-
             Watermark = Logo(transparency, watermarkPath)
-
 
         except ValueError:
             print("Bitte gibt eine Gleitkomma-Zahl zwischen 0 und 1 an!")
@@ -69,16 +80,15 @@ if __name__ == "__main__":
 
             if factor < 0 or factor > 1:
                 raise ValueError("Factor must be between 0 and 1")
-
-            factorFlag = 1
             Watermark.scale(factor, MainImage.size)
+            factorFlag = 1
 
         except ValueError:
             print("Bitte gibt eine Gleitkomma-Zahl zwischen 0 und 1 an!")
         except Exception as e:
             print("Da ist etwas schiefgelaufen!", e)
 
-    while logoPos == "":
+    while isLogoPos == 0:
 
         try:
             print("Position des Wasserzeichens, durch 'Mausklick' bestätigen: ")
@@ -86,34 +96,33 @@ if __name__ == "__main__":
 
             cv2.setMouseCallback(MainImage.name, MainImage.setLogoPosition)
             cv2.waitKey(0)
-            print("Drücke eine beliebige Taste, um fortzufahren!")
-            MainImage.close()
 
             MainImage.addWatermark(Watermark)
             MainImage.show()
-            cv2.waitKey(0)
             print("Drücke eine beliebige Taste, um fortzufahren!")
-            outputImageSatisfactory = ""
-
-            while outputImageSatisfactory not in {"J", "j"} and outputImageSatisfactory not in {"N", "n"}:
-
-                outputImageSatisfactory = input("Gefällt Ihnen die Position des Wasserzeichens? (J = Ja, N = Nein): ")
-
-                try:
-                    if outputImageSatisfactory.upper() == "J":
-                        outputImagePath = input("Bitte geben Sie einen Namen für die zu speichernde Datei an: ") + ".png"
-                        MainImage.save(outputImagePath)
-                        print("Bild wurde gespeichert!")
-
-                    elif outputImageSatisfactory.upper() == "N":
-                        print("#DoItAgain")
-                        logoPos = ""
-                        MainImage = BaseImage(mainPath)
-
-                    else:
-                        print("Falscher Buchstabe!")
-                except Exception as e:
-                    print("Mehr Kaput!", e)
+            cv2.waitKey(0)
 
         except Exception as e:
             print("Kaput!", e)
+
+        while outputImageSatisfactory not in {"J", "j"} and outputImageSatisfactory not in {"N", "n"}:
+
+            outputImageSatisfactory = input("Gefällt Ihnen die Position des Wasserzeichens? (J = Ja, N = Nein): ")
+
+            try:
+                if outputImageSatisfactory.upper() == "J":
+                    outputImagePath = input("Bitte geben Sie einen Namen für die zu speichernde Datei an: ") + ".png"
+                    MainImage.save(outputImagePath)
+                    print("Bild wurde gespeichert!")
+                    isLogoPos = 1
+
+                elif outputImageSatisfactory.upper() == "N":
+                    print("#DoItAgain")
+                    logoPos = ""
+                    MainImage = BaseImage(mainPath)
+
+                else:
+                    print("Falscher Buchstabe!")
+            except Exception as e:
+                print("Mehr Kaput!", e)
+

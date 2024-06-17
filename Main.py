@@ -109,7 +109,7 @@ if __name__ == "__main__":
             cv2.waitKey(0)
             outputImageSatisfactory = ""
 
-            while outputImageSatisfactory != "J" and outputImageSatisfactory != "N":
+            while outputImageSatisfactory not in {"J", "j"} and outputImageSatisfactory not in {"N", "n"}:
 
                 outputImageSatisfactory = input("Gefällt Ihnen die Position des Wasserzeichens? (J = Ja, N = Nein): ")
 
@@ -121,6 +121,8 @@ if __name__ == "__main__":
 
                     elif outputImageSatisfactory.upper() == "N":
                         print("#DoItAgain")
+                        logoPos = ""
+                        MainImage = BaseImage(mainPath)
 
                     else:
                         print("Falscher Buchstabe!")

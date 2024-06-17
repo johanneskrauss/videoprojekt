@@ -28,8 +28,8 @@ class Logo(Image):
             newHeight = int(newWidth / ratio)
 
         elif ratio == 1:  # Quadratisch
-            newWidth = min(imageSize)*factor
-            newHeight = newWidth
+            newWidth = int(min(imageSize)*factor)
+            newHeight = int(newWidth)
 
         else:  # Höher als breit
             newHeight = int(imageSize[0] * factor)
@@ -53,3 +53,5 @@ class Logo(Image):
             return cv2.merge((b, g, r))
         else:
             return self.openCVData
+
+

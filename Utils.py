@@ -13,3 +13,6 @@ def getMousePosition(event, x, y, flags, params=None) -> None:
     if event == cv2.EVENT_LBUTTONDOWN:
         print(x, y)
         cv2.destroyAllWindows()
+
+def textToLogo():
+    pass

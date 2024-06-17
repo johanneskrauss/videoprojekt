@@ -28,7 +28,7 @@ class Logo(Image):
             newHeight = int(newWidth / ratio)
 
         elif ratio == 1:  # Quadratisch
-            newWidth = min(imageSize)
+            newWidth = min(imageSize)*factor
             newHeight = newWidth
 
         else:  # Höher als breit

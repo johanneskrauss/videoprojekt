@@ -37,3 +37,8 @@ class BaseImage(Image):
             roi[:, :, c] = roi[:, :, c] * (1 - logo.transparency) + logo.openCVData[:, :, c] * logo.transparency
 
         self.openCVData[y:y + h, x:x + w] = roi
+
+    def setLogoPosition(self, event, x, y, flags, param):
+        if event == cv2.EVENT_LBUTTONDOWN:
+            self.logoPosition = (x, y)
+            print("Position des Wasserzeichens: ", self.logoPosition)

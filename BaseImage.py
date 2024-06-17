@@ -42,3 +42,5 @@ class BaseImage(Image):
         if event == cv2.EVENT_LBUTTONDOWN:
             self.logoPosition = (x, y)
             print("Position des Wasserzeichens: ", self.logoPosition)
+            print("Drücke eine beliebige Taste, um fortzufahren!")
+

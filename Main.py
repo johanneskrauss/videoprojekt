@@ -83,23 +83,17 @@ if __name__ == "__main__":
             print("Position des Wasserzeichens, durch 'Mausklick' bestätigen: ")
             MainImage.show()
 
-            # Create a new stream to capture the output
-            #output = io.StringIO()
-            # Redirect standard output to the new stream
-            #sys.stdout = output
             cv2.setMouseCallback(MainImage.name, MainImage.setLogoPosition)
-            # Reset standard output to the console
             cv2.waitKey(0)
-            #sys.stdout = sys.__stdout__
-
-            #logoPos = output.getvalue().strip("\n").split(" ")
-            #MainImage.logoPosition = int(logoPos[0]), int(logoPos[1])
+            print("Drücke eine beliebige Taste, um fortzufahren!")
+            MainImage.close()
 
             Watermark.transparency = Watermark.getAlphaChannel() * Watermark.transparency
 
             MainImage.addWatermark(Watermark)
             MainImage.show()
             cv2.waitKey(0)
+            print("Drücke eine beliebige Taste, um fortzufahren!")
             outputImageSatisfactory = ""
 
             while outputImageSatisfactory not in {"J", "j"} and outputImageSatisfactory not in {"N", "n"}:

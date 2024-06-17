@@ -72,7 +72,8 @@ if __name__ == "__main__":
                 raise ValueError("Transparency must be between 0 and 1")
 
             Watermark = Logo(transparency, watermarkPath)
-
+           # Watermark.transparency = transparency
+            MainImage.alignLogo(Watermark)
 
         except ValueError:
             print("Bitte gibt eine Gleitkomma-Zahl zwischen 0 und 1 an!")
@@ -87,10 +88,8 @@ if __name__ == "__main__":
                 raise ValueError("Factor must be between 0 and 1")
             Watermark.scale(factor, MainImage.size)
             factorFlag = 1
-            Watermark.scale(factor, MainImage.size)
-
-        except ValueError:
-            print("Bitte gibt eine Gleitkomma-Zahl zwischen 0 und 1 an!")
+        except ValueError as e:
+            print("Bitte gibt eine Gleitkomma-Zahl zwischen 0 und 1 an!", e)
         except Exception as e:
             print("Da ist etwas schiefgelaufen!", e)
 
@@ -102,7 +101,6 @@ if __name__ == "__main__":
 
             cv2.setMouseCallback(MainImage.name, MainImage.setLogoPosition)
             cv2.waitKey(0)
-            print("Drücke eine beliebige Taste, um fortzufahren!")
             MainImage.close()
 
             MainImage.addWatermark(Watermark)

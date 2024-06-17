@@ -4,7 +4,7 @@ import cv2
 class Image:
     def __init__(self, path, name="image"):
         self.__path = path
-        self.__openCVData = cv2.imread(self.path)
+        self.__openCVData = cv2.imread(self.path, cv2.IMREAD_UNCHANGED)
         self.__size = self.openCVData.shape[0], self.openCVData.shape[1]
         self.__name = name
 

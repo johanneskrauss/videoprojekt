@@ -6,7 +6,7 @@ import numpy as np
 class Logo(Image):
     def __init__(self, transparency, path):
         super().__init__(path)
-        self.__transparency = transparency
+        self.transparency = transparency
 
     # Setter und getter
     @property
@@ -14,7 +14,7 @@ class Logo(Image):
         return self.__transparency
 
     @transparency.setter
-    def transparency(self, value):
+    def transparency(self, value=1.0):
         self.__transparency = self.getAlphaChannel() * value
 
     # Logogröße in Relation zum Bild
@@ -37,12 +37,13 @@ class Logo(Image):
 
         self.size = newWidth, newHeight
         self.openCVData = cv2.resize(self.openCVData, self.size, interpolation=cv2.INTER_AREA)
+        self.transparency = cv2.resize(self.transparency, self.size, interpolation=cv2.INTER_AREA) # resize transparency array to fit new image size
 
     # Alpha Kanal von Bild ausgeben oder erstellen
     def getAlphaChannel(self) -> np.ndarray:
         if self.openCVData.shape[2] == 4:  # Alpha Channel vorhanden
-            b, g, r, a = cv2.split(self.openCVData)
-            return a / 255.0
+            alpha = self.openCVData[:, :, 3]
+            return alpha / 255.0
         else:
             return np.ones(self.openCVData.shape[:2], dtype="float32")  # Kein Alpha Channel vorhanden -> Array aus 1en
 

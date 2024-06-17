@@ -84,16 +84,16 @@ if __name__ == "__main__":
             MainImage.show()
 
             # Create a new stream to capture the output
-            output = io.StringIO()
+            #output = io.StringIO()
             # Redirect standard output to the new stream
-            sys.stdout = output
-            cv2.setMouseCallback(MainImage.name, Utils.getMousePosition)
+            #sys.stdout = output
+            cv2.setMouseCallback(MainImage.name, MainImage.setLogoPosition)
             # Reset standard output to the console
             cv2.waitKey(0)
-            sys.stdout = sys.__stdout__
+            #sys.stdout = sys.__stdout__
 
-            logoPos = output.getvalue().strip("\n").split(" ")
-            MainImage.logoPosition = int(logoPos[0]), int(logoPos[1])
+            #logoPos = output.getvalue().strip("\n").split(" ")
+            #MainImage.logoPosition = int(logoPos[0]), int(logoPos[1])
 
             Watermark.transparency = Watermark.getAlphaChannel() * Watermark.transparency
 

@@ -42,3 +42,4 @@ class BaseImage(Image):
         if event == cv2.EVENT_LBUTTONDOWN:
             self.logoPosition = (x, y)
             print("Position des Wasserzeichens: ", self.logoPosition)
+            cv2.destroyAllWindows()

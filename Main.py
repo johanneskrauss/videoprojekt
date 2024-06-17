@@ -36,17 +36,23 @@ if __name__ == "__main__":
 
     while watermarkPath == "":
 
-        try:
-            # Wasserzeichen
-            print("Bitte wähle ein Wasserzeichen aus: ")
-            watermarkPath = Utils.selectFile()
+        text_oder_bild = input("Möchten Sie Text oder ein Bild einfügen? (t=Text, b=Bild)")
+        if text_oder_bild.lower() == "t":
+            Utils.text_to_logo()
+            watermarkPath = "text_logo.png"
+            break
+        elif text_oder_bild.lower() == "b":
+            try:
+                # Wasserzeichen
+                print("Bitte wähle ein Wasserzeichen aus: ")
+                watermarkPath = Utils.selectFile()
 
-        except FileNotFoundError:
-            print("Datei nicht gefunden!")
-        except ValueError:
-            print("Falsches Dateiformat!")
-        except AttributeError:
-            print("Bitte eine Bilddatei auswählen! (.jpg, .png, .bmp, ...)")
+            except FileNotFoundError:
+                print("Datei nicht gefunden!")
+            except ValueError:
+                print("Falsches Dateiformat!")
+            except AttributeError:
+                print("Bitte eine Bilddatei auswählen! (.jpg, .png, .bmp, ...)")
 
     while Watermark is None:
         try:

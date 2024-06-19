@@ -31,23 +31,22 @@ class Logo(Image):
     def scale(self, factor: float, imageSize: tuple) -> None:
         if factor <= 0 or factor > 1:
             raise ValueError("Factor must be  between 0 and 1")
-        width, height = self.size[1], self.size[0]
         # Bildverhältnis von Wasserzeichen beibehalten
-        ratio = float(width) / float(height)
+        ratio = float(self.size[1]) / float(self.size[0])
 
         # Skalierung
         if ratio >= 1:  # Breiter als hoch / quadratisch
             newHeight = int((imageSize[0]*factor)/ratio)
             newWidth = int(newHeight * ratio)
             # falls breites Bild in breites Bild eingefügt wird
-            if newWidth > width:
+            if newWidth > imageSize[1]:
                 newWidth = imageSize[1]
                 newHeight = int(newWidth / ratio)
         else:  # Höher als breit
             newWidth = int(imageSize[1] * factor * ratio)
             newHeight = int(newWidth / ratio)
             # falls hohes Bild in hohes Bild eingefügt wird
-            if newHeight > height:
+            if newHeight > imageSize[0]:
                 newHeight = imageSize[0]
                 newWidth = int(newHeight * ratio)
 

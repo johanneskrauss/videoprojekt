@@ -16,6 +16,9 @@ watermarkPath = ""
 transparency = 0
 factor = 0
 
+# Objekte
+TextImage = TextImage()
+
 # Flags
 isLogoPos = 0
 factorFlag = 0
@@ -43,7 +46,6 @@ if __name__ == "__main__":
             mainPath = ""
 
     while watermarkPath == "":
-        TextImage = TextImage()
 
         text_oder_bild = input("Möchten Sie Text oder ein Bild einfügen? (T = Text, B = Bild): ")
 
@@ -68,6 +70,9 @@ if __name__ == "__main__":
             except AttributeError:
                 print("Bitte eine Bilddatei auswählen! (.jpg, .png, .bmp, ...)")
 
+        else:
+            print("Falscher Buchstabe!")
+
     while isWatermark == 0:
         try:
             transparency = float(input("Bitte den Grad der Transparenz angeben! (Zwischen 0 und 1, wobei 1 = 100% Deckkraft): "))
@@ -76,7 +81,6 @@ if __name__ == "__main__":
                 raise ValueError("Transparenz muss zwischen 0 und 1 liegen!")
 
             Watermark = Logo(transparency, watermarkPath)
-            TextImage.deleteFile()
             MainImage.alignLogo(Watermark)
 
         except ValueError:
@@ -128,10 +132,12 @@ if __name__ == "__main__":
                     MainImage.save(outputImagePath)
                     print("Bild wurde gespeichert!")
                     isWatermark = 1
+                    TextImage.deleteFile()
 
                 elif outputImageSatisfactory == "N":
                     # Reset
                     isLogoPos = 0
+                    MainImage.close()
                     MainImage = BaseImage(mainPath)
                     factorFlag = 0
                     isWatermark = 0

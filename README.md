@@ -6,3 +6,5 @@ Es kann sowohl ein Bild als auch ein Text als Wasserzeichen verwendet werden. An
 Das fertige Bild mit Wasserzeichen kann anschließend gespeichert werden.
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 Wichtige Hinweise zum Code:
+- Das Programm nutzt die aktuellste open-cv Version 
+- zum aktuellen Zeitpunkt (19.06.2024) läuft opencv 

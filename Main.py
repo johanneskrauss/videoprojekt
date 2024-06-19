@@ -35,14 +35,14 @@ if __name__ == "__main__":
         try:
             mainPath = Utils.selectFile()
             MainImage = BaseImage(mainPath)
-        except FileNotFoundError:
-            print("Datei konnte nicht gefunden werden!")
+        except FileNotFoundError as e:
+            print("Datei konnte nicht gefunden werden!", e)
             mainPath = ""
-        except ValueError:
-            print("Das Dateiformat ist falsch!")
+        except ValueError as e:
+            print("Das Dateiformat ist falsch!", e)
             mainPath = ""
-        except AttributeError:
-            print("Bitte eine Bilddatei auswählen! (.jpg, .png, .bmp, ...) oder Pfad existiert nicht!")
+        except AttributeError as e:
+            print("Bitte eine Bilddatei auswählen! (.jpg, .png, .bmp, ...) oder Pfad existiert nicht!", e)
             mainPath = ""
 
     while watermarkPath == "":
@@ -87,37 +87,37 @@ if __name__ == "__main__":
         except Exception as e:
             print("Da ist etwas schiefgelaufen!", e)
 
-    while factorFlag == 0:
-        try:
-            factor = float(input("Bitte einen Skalierungs-Faktor angeben! (Zwischen 0 und 1, wobei 1 = Maximal mögliche Größe): "))
+        while factorFlag == 0:
+            try:
+                factor = float(input("Bitte einen Skalierungs-Faktor angeben! (Zwischen 0 und 1, wobei 1 = Maximal mögliche Größe): "))
 
-            if factor < 0 or factor > 1:
-                raise ValueError("Factor must be between 0 and 1")
-            Watermark.scale(factor, MainImage.size)
-            factorFlag = 1
-        except ValueError as e:
-            print("Bitte gibt eine Gleitkomma-Zahl zwischen 0 und 1 an!", e)
-        except Exception as e:
-            print("Da ist etwas schiefgelaufen!", e)
+                if factor < 0 or factor > 1:
+                    raise ValueError("Factor must be between 0 and 1")
+                Watermark.scale(factor, MainImage.size)
+                factorFlag = 1
+            except ValueError as e:
+                print("Bitte gibt eine Gleitkomma-Zahl zwischen 0 und 1 an!", e)
+            except Exception as e:
+                print("Da ist etwas schiefgelaufen!", e)
 
-    while isLogoPos == 0:
+        while isLogoPos == 0:
 
-        try:
-            print("Position des Wasserzeichens, durch 'Mausklick' bestätigen: ")
-            MainImage.show()
+            try:
+                print("Position des Wasserzeichens, durch 'Mausklick' bestätigen: ")
+                MainImage.show()
 
-            cv2.setMouseCallback(MainImage.name, MainImage.setLogoPosition)
-            cv2.waitKey(0)
-            MainImage.close()
+                cv2.setMouseCallback(MainImage.name, MainImage.setLogoPosition)
+                cv2.waitKey(0)
+                MainImage.close()
 
-            MainImage.addWatermark(Watermark)
-            MainImage.show()
-            print("Drücke eine beliebige Taste, um fortzufahren!")
-            cv2.waitKey(0)
-            outputImageSatisfactory = ""
+                MainImage.addWatermark(Watermark)
+                MainImage.show()
+                print("Drücke eine beliebige Taste, um fortzufahren!")
+                cv2.waitKey(0)
+                outputImageSatisfactory = ""
 
-        except Exception as e:
-            print("Kaput!", e)
+            except Exception as e:
+                print("Hier lief etwas schief: ", e)
 
         while outputImageSatisfactory != "J" and outputImageSatisfactory != "N":
 
@@ -133,7 +133,7 @@ if __name__ == "__main__":
                 elif outputImageSatisfactory == "N":
                     print("#DoItAgain")
                     isLogoPos = 0
-                    MainImage = BaseImage(mainPath)
+                    MainImage = None
 
                 else:
                     print("Falscher Buchstabe!")

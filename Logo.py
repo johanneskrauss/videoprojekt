@@ -29,13 +29,18 @@ class Logo(Image):
     def scale(self, factor: float, imageSize: tuple) -> None:
         if factor <= 0 or factor > 1:
             raise ValueError("Factor must be  between 0 and 1")
-        # Bildverhältnis beibehalten
-        ratio = float(self.openCVData.shape[1]) / float(self.openCVData.shape[0])
+        width, height = self.openCVData.shape[1], self.openCVData.shape[0]
+        # Bildverhältnis von Wasserzeichen beibehalten
+        ratio = float(width) / float(height)
 
         # Skalierung
         if ratio >= 1:  # Breiter als hoch / quadratisch
             newHeight = int((imageSize[1]*factor)/ratio)
             newWidth = int(newHeight * ratio)
+            # falls breites Bild in breites Bild eingefügt wird
+            if newWidth > width:
+                newWidth = width
+                newHeight = int(newWidth / ratio)
         else:  # Höher als breit
             newWidth = int(imageSize[0] * factor * ratio)
             newHeight = int(newWidth / ratio)

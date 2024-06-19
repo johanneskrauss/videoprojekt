@@ -1,4 +1,4 @@
-------------------Videoprojekt von Gruppe 5-------------------------------------------------------
+-------------------------------Videoprojekt von Gruppe 5-------------------------------------------------------
 https://github.com/johanneskrauss/videoprojekt
 --------------------------------------------------------------------------------------------------
 Ein Programm zum Einfügen eines Wasserzeichens in ein Bild, gesteuert über Eingaben in die Konsole. Es können sowohl Jpeg- als auch Png-Dateien bearbeitet werden. Auch Bilder mit

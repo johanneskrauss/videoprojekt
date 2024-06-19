@@ -53,6 +53,7 @@ class Logo(Image):
         self.openCVData = cv2.resize(self.openCVData, self.size, interpolation=cv2.INTER_AREA)
         self.transparency = cv2.resize(self.transparency, self.size,
                                        interpolation=cv2.INTER_AREA)  # resize transparency array to fit new image size
+        self.size = newHeight, newWidth # um Konvention zu folgen
 
     # RGB Anteil von Bild ausgeben
     def getRGBChannel(self) -> np.ndarray:

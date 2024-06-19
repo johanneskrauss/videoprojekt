@@ -32,8 +32,8 @@ class BaseImage(Image):
                 logo.openCVData = cv2.cvtColor(logo.openCVData, cv2.COLOR_BGR2BGRA)
 
     def addWatermark(self, logo: Logo):
-        x, y = self.logoPosition
-        w, h = logo.size
+        y, x = self.logoPosition
+        h, w = logo.size
 
         borders = self.openCVData[y:y + h, x:x + w]  # Bereich, in dem das Logo liegen würde
 
@@ -53,6 +53,6 @@ class BaseImage(Image):
 
     def setLogoPosition(self, event, x, y, flags, param):
         if event == cv2.EVENT_LBUTTONDOWN:
-            self.logoPosition = [x, y]
+            self.logoPosition = [y,x]
             print("Position des Wasserzeichens: ", self.logoPosition)
             print("Drücke eine beliebige Taste, um fortzufahren!")

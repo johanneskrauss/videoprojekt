@@ -20,6 +20,7 @@ factor = 0
 isLogoPos = 0
 factorFlag = 0
 outputImageSatisfactory = ""
+isWatermark = 0
 
 if __name__ == "__main__":
 
@@ -44,7 +45,7 @@ if __name__ == "__main__":
     while watermarkPath == "":
         TextImage = TextImage()
 
-        text_oder_bild = input("Möchten Sie Text oder ein Bild einfügen? (t=Text, b=Bild)")
+        text_oder_bild = input("Möchten Sie Text oder ein Bild einfügen? (T = Text, B = Bild): ")
 
         if text_oder_bild.lower() == "t":
 
@@ -72,7 +73,7 @@ if __name__ == "__main__":
             transparency = float(input("Bitte den Grad der Transparenz angeben! (Zwischen 0 und 1, wobei 1 = 100% Deckkraft): "))
 
             if transparency < 0 or transparency > 1:
-                raise ValueError("Transparency must be between 0 and 1")
+                raise ValueError("Transparenz muss zwischen 0 und 1 liegen!")
 
             Watermark = Logo(transparency, watermarkPath)
             TextImage.deleteFile()
@@ -81,20 +82,20 @@ if __name__ == "__main__":
         except ValueError:
             print("Bitte gibt eine Gleitkomma-Zahl zwischen 0 und 1 an!")
         except Exception as e:
-            print("Da ist etwas schiefgelaufen!", e)
+            print("Hier lief etwas schief: ", e)
 
         while factorFlag == 0:
             try:
                 factor = float(input("Bitte einen Skalierungs-Faktor angeben! (Zwischen 0 und 1, wobei 1 = Maximal mögliche Größe): "))
 
                 if factor < 0 or factor > 1:
-                    raise ValueError("Factor must be between 0 and 1")
+                    raise ValueError("Faktor muss zwischen 0 und 1 liegen!")
                 Watermark.scale(factor, MainImage.size)
                 factorFlag = 1
             except ValueError as e:
                 print("Bitte gibt eine Gleitkomma-Zahl zwischen 0 und 1 an!", e)
             except Exception as e:
-                print("Da ist etwas schiefgelaufen!", e)
+                print("Hier lief etwas schief: ", e)
 
         while isLogoPos == 0:
 
@@ -122,13 +123,14 @@ if __name__ == "__main__":
 
             try:
                 if outputImageSatisfactory == "J":
+                    # Speichern
                     outputImagePath = input("Bitte geben Sie einen Namen für die zu speichernde Datei an: ") + ".png"
                     MainImage.save(outputImagePath)
                     print("Bild wurde gespeichert!")
                     isWatermark = 1
 
                 elif outputImageSatisfactory == "N":
-                    print("#DoItAgain")
+                    # Reset
                     isLogoPos = 0
                     MainImage = BaseImage(mainPath)
                     factorFlag = 0

@@ -8,6 +8,8 @@ class Image:
         self.__size = self.openCVData.shape[0], self.openCVData.shape[1]
         self.__name = name
 
+    def __str__(self):
+        return f"Image: {self.path}, {self.openCVData}"
     @property
     def path(self):
         return self.__path

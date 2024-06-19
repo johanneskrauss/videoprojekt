@@ -11,6 +11,9 @@ class BaseImage(Image):
         super().__init__(path)
         self.__logoPosition = [0, 0]
 
+    def __str__(self):
+        return f"BaseImage: {self.path}, {self.size}, {self.logoPosition}, {self.openCVData.shape}"
+
     @property
     def logoPosition(self):
         return self.__logoPosition

@@ -8,6 +8,8 @@ class Logo(Image):
         super().__init__(path)
         self.transparency = transparency
 
+    def __str__(self):
+        return f"Logo: {self.path}, {self.size}, {self.transparency}, {self.openCVData.shape}"
     # Setter und getter
     @property
     def transparency(self):
@@ -29,7 +31,7 @@ class Logo(Image):
     def scale(self, factor: float, imageSize: tuple) -> None:
         if factor <= 0 or factor > 1:
             raise ValueError("Factor must be  between 0 and 1")
-        width, height = self.openCVData.shape[1], self.openCVData.shape[0]
+        width, height = self.size[1], self.size[0]
         # Bildverhältnis von Wasserzeichen beibehalten
         ratio = float(width) / float(height)
 

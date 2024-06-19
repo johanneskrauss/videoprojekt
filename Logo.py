@@ -41,14 +41,14 @@ class Logo(Image):
             newWidth = int(newHeight * ratio)
             # falls breites Bild in breites Bild eingefügt wird
             if newWidth > width:
-                newWidth = width
+                newWidth = imageSize[1]
                 newHeight = int(newWidth / ratio)
         else:  # Höher als breit
             newWidth = int(imageSize[1] * factor * ratio)
             newHeight = int(newWidth / ratio)
             # falls hohes Bild in hohes Bild eingefügt wird
             if newHeight > height:
-                newHeight = height
+                newHeight = imageSize[0]
                 newWidth = int(newHeight * ratio)
 
         self.size = newWidth, newHeight

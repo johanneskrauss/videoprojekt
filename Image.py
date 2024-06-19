@@ -9,7 +9,7 @@ class Image:
         self.__name = name
 
     def __str__(self):
-        return f"Image: {self.path}, {self.openCVData}"
+        pass
     @property
     def path(self):
         return self.__path

@@ -121,7 +121,7 @@ if __name__ == "__main__":
 
         while outputImageSatisfactory != "J" and outputImageSatisfactory != "N":
 
-            outputImageSatisfactory = input("Gefällt Ihnen die Position des Wasserzeichens? (J = Ja, N = Nein): ").upper()
+            outputImageSatisfactory = input("Gefällt Ihnen das Wasserzeichen? (J = Ja, N = Nein): ").upper()
 
             try:
                 if outputImageSatisfactory == "J":
@@ -138,4 +138,4 @@ if __name__ == "__main__":
                 else:
                     print("Falscher Buchstabe!")
             except Exception as e:
-                print("Mehr Kaput!", e)
+                print("Hier lief etwas schief: ", e)

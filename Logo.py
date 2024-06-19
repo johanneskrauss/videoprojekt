@@ -44,6 +44,10 @@ class Logo(Image):
         else:  # Höher als breit
             newWidth = int(imageSize[0] * factor * ratio)
             newHeight = int(newWidth / ratio)
+            # falls hohes Bild in hohes Bild eingefügt wird
+            if newHeight > height:
+                newHeight = height
+                newWidth = int(newHeight * ratio)
 
         self.size = newWidth, newHeight
         self.openCVData = cv2.resize(self.openCVData, self.size, interpolation=cv2.INTER_AREA)

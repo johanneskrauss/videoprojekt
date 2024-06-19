@@ -1,11 +1,11 @@
--------------------------------------Videoprojekt von Gruppe 5--------------------------------------------------------------------------------------------------------------------
+------------------Videoprojekt von Gruppe 5--------------------------------------------------------------------------------------------------------------------
 https://github.com/johanneskrauss/videoprojekt
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
 Ein Programm zum Einfügen eines Wasserzeichens in ein Bild, gesteuert über Eingaben in die Konsole. Es können sowohl Jpeg- als auch Png-Dateien bearbeitet werden. Auch Bilder mit
 Alpha Kanal können eingelesen werden. 
 Es kann sowohl ein Bild als auch ein Text als Wasserzeichen verwendet werden. Anschließend wird die Deckkraft sowie die Position des durch einen Mausklick in das Bild festgelegt.
 Das fertige Bild mit Wasserzeichen kann anschließend gespeichert werden.
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
 Genutzte Bibliotheken:
 - OpenCV 4.10.0
 - Numpy 1.26.4

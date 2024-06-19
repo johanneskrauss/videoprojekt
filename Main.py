@@ -16,10 +16,6 @@ watermarkPath = ""
 transparency = 0
 factor = 0
 
-# Objekte
-Watermark = None
-MainImage = None
-
 # Flags
 isLogoPos = 0
 factorFlag = 0
@@ -71,7 +67,7 @@ if __name__ == "__main__":
             except AttributeError:
                 print("Bitte eine Bilddatei auswählen! (.jpg, .png, .bmp, ...)")
 
-    while Watermark is None:
+    while isWatermark == 0:
         try:
             transparency = float(input("Bitte den Grad der Transparenz angeben! (Zwischen 0 und 1, wobei 1 = 100% Deckkraft): "))
 
@@ -115,6 +111,7 @@ if __name__ == "__main__":
                 print("Drücke eine beliebige Taste, um fortzufahren!")
                 cv2.waitKey(0)
                 outputImageSatisfactory = ""
+                isLogoPos = 1
 
             except Exception as e:
                 print("Hier lief etwas schief: ", e)
@@ -128,12 +125,14 @@ if __name__ == "__main__":
                     outputImagePath = input("Bitte geben Sie einen Namen für die zu speichernde Datei an: ") + ".png"
                     MainImage.save(outputImagePath)
                     print("Bild wurde gespeichert!")
-                    isLogoPos = 1
+                    isWatermark = 1
 
                 elif outputImageSatisfactory == "N":
                     print("#DoItAgain")
                     isLogoPos = 0
-                    MainImage = None
+                    MainImage = BaseImage(mainPath)
+                    factorFlag = 0
+                    isWatermark = 0
 
                 else:
                     print("Falscher Buchstabe!")

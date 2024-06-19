@@ -31,22 +31,19 @@ class Logo(Image):
             raise ValueError("Factor must be  between 0 and 1")
         # Bildverhältnis beibehalten
         ratio = float(self.openCVData.shape[1]) / float(self.openCVData.shape[0])
-        if ratio > 1:  # Breiter als hoch
-            newWidth = int(imageSize[1] * factor)
-            newHeight = int(newWidth / ratio)
 
-        elif ratio == 1:  # Quadratisch
-            newWidth = int(min(imageSize)*factor)
-            newHeight = int(newWidth)
-
-        else:  # Höher als breit
-            newHeight = int(imageSize[0] * factor)
+        # Skalierung
+        if ratio >= 1:  # Breiter als hoch / quadratisch
+            newHeight = int((imageSize[1]*factor)/ratio)
             newWidth = int(newHeight * ratio)
+        else:  # Höher als breit
+            newWidth = int(imageSize[0] * factor * ratio)
+            newHeight = int(newWidth / ratio)
 
         self.size = newWidth, newHeight
         self.openCVData = cv2.resize(self.openCVData, self.size, interpolation=cv2.INTER_AREA)
-        self.transparency = cv2.resize(self.transparency, self.size, interpolation=cv2.INTER_AREA) # resize transparency array to fit new image size
-
+        self.transparency = cv2.resize(self.transparency, self.size,
+                                       interpolation=cv2.INTER_AREA)  # resize transparency array to fit new image size
 
     # RGB Anteil von Bild ausgeben
     def getRGBChannel(self) -> np.ndarray:
@@ -55,5 +52,3 @@ class Logo(Image):
             return cv2.merge((b, g, r))
         else:
             return self.openCVData
-
-

@@ -46,10 +46,12 @@ if __name__ == "__main__":
             mainPath = ""
 
     while watermarkPath == "":
+        TextImage = TextImage()
 
         text_oder_bild = input("Möchten Sie Text oder ein Bild einfügen? (t=Text, b=Bild)")
+
         if text_oder_bild.lower() == "t":
-            TextImage = TextImage()
+
             TextImage.selectText(input("Bitte geben Sie den Text ein: "))
             TextImage.selectFontColor(input("Bitte geben Sie die Schriftfarbe an (S=Schwarz, W=Weiß, G=Grau): "))
             TextImage.createTextImage()
@@ -60,6 +62,7 @@ if __name__ == "__main__":
                 # Wasserzeichen
                 print("Bitte wähle ein Wasserzeichen aus: ")
                 watermarkPath = Utils.selectFile()
+
 
             except FileNotFoundError:
                 print("Datei nicht gefunden!")
@@ -111,6 +114,7 @@ if __name__ == "__main__":
             MainImage.show()
             print("Drücke eine beliebige Taste, um fortzufahren!")
             cv2.waitKey(0)
+            outputImageSatisfactory = ""
 
         except Exception as e:
             print("Kaput!", e)
@@ -130,10 +134,8 @@ if __name__ == "__main__":
                     print("#DoItAgain")
                     isLogoPos = 0
                     MainImage = BaseImage(mainPath)
-                    outputImageSatisfactory = ""
 
                 else:
                     print("Falscher Buchstabe!")
             except Exception as e:
                 print("Mehr Kaput!", e)
-

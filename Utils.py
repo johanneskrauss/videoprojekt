@@ -27,7 +27,7 @@ class TextImage:
     text = "Orem Lipsum"
     position = (50, 50)  # Adjust position as needed
 
-    __filename= "text_logo.png"
+    __filename = "text_logo.png"
 
     def selectFontColor(self, font_color_input: str):
         # Set font color based on user input
@@ -44,16 +44,28 @@ class TextImage:
         self.text = text
 
     def deleteFile(self):
-        os.remove(self.__filename)
+        try:
+            os.remove(self.__filename)
+        except:
+            pass  # Nichts tun, wenn die Datei nicht existiert
 
     def createTextImage(self):
+
+        # Get the size of the text box
+        text_size = cv2.getTextSize(self.text, self.font, self.font_size, self.font_thickness)[0]
+
         # Create an empty image with a transparent alpha channel
-        empty_img = np.zeros((200, 200, 4), np.uint8)
+        empty_img = np.zeros((50, text_size[0], 4), np.uint8)  # Add some padding to the width
+
+        # Calculate the position to center the text
+        org = ((empty_img.shape[1] - text_size[0]) // 2, (empty_img.shape[0] + text_size[1]) // 2)
 
         # Add text to the image
-        text_img = cv2.putText(empty_img, self.text, self.position, self.font, self.font_size, self.font_color, self.font_thickness, cv2.LINE_AA)
+        text_img = cv2.putText(empty_img, self.text, org, self.font, self.font_size, self.font_color,
+                               self.font_thickness, cv2.LINE_AA)
 
         # Save the image
         cv2.imwrite(self.__filename, text_img)
+
 
 

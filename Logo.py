@@ -35,14 +35,14 @@ class Logo(Image):
 
         # Skalierung
         if ratio >= 1:  # Breiter als hoch / quadratisch
-            newHeight = int((imageSize[1]*factor)/ratio)
+            newHeight = int((imageSize[0]*factor)/ratio)
             newWidth = int(newHeight * ratio)
             # falls breites Bild in breites Bild eingefügt wird
             if newWidth > width:
                 newWidth = width
                 newHeight = int(newWidth / ratio)
         else:  # Höher als breit
-            newWidth = int(imageSize[0] * factor * ratio)
+            newWidth = int(imageSize[1] * factor * ratio)
             newHeight = int(newWidth / ratio)
             # falls hohes Bild in hohes Bild eingefügt wird
             if newHeight > height:
